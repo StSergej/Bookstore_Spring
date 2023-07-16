@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
+</head>
+
+<body>
+
+    <div class="container-fluid text-center">
+        <br>
+        <div class="m-2"><h3>Books</h3></div>
+
+        <div class="m-2">
+            <a class="h5" th:href="@{/books/new}">Add New Book</a>
+        </div>
+
+        <div>
+            <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Book Name</th>
+                    <th>Author ID</th>
+                    <th>Publisher</th>
+                    <th>ISBN</th>
+                    <th>Total pages</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <th:block th:each="book : ${listBooks}">
+                <tr>
+                    <td>[[${book.id}]]</td>
+                    <td>[[${book.bookName}]]</td>
+                    <td>[[${book.author}]]</td>
+                    <td>[[${book.publisher}]]</td>
+                    <td>[[${book.isbn}]]</td>
+                    <td>[[${book.totalPages}]]</td>
+                    <td>[[${book.price}]]</td>
+                    <td>[[${action}]]
+                        <a class="h6 m-3" th:href="@{'/books/edit/' + ${book.id}}">Edit</a>
+                        <a class="h6" th:href="@{'/books/delete/' + ${book.id}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+
+        </table>
+    </div>
+
+    </div>
+
+</body>
+</html>

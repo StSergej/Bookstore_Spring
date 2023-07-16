@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+
+</head>
+
+
+<body>
+
+<div class="container-fluid text-center">
+    <br>
+    <h2>Welcome to my application Bookstore</h2>
+    <a class="h4 m-2" th:href="@{authors}">Authors</a>
+    <a class="h4 m-2" th:href="@{books.html}">Books</a>
+    <a class="h4 m-2"  th:href="@{customers}">Customers</a>
+    <a class="h4 m-2" th:href="@{orders}">Orders</a>
+<!--    <a class="h4 m-2" th:href="@{orderItems}">Order Items</a>-->
+</div>
+
+</body>
+</html>

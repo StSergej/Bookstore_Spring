@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Authors</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
+</head>
+
+<body>
+
+    <div class="container-fluid text-center">
+        <br>
+        <div class="m-2"><h3>Authors</h3></div>
+
+            <div class="m-2">
+                <a class="h5" th:href="@{/authors/new}">Add New Author</a>
+            </div>
+
+            <div>
+                <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Author Name</th>
+                        <th>Nationality</th>
+                        <th>Annotation</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <th:block th:each="author : ${listAuthors}">
+                    <tr>
+                        <td>[[${author.id}]]</td>
+                        <td>[[${author.authorName}]]</td>
+                        <td>[[${author.nationality}]]</td>
+                        <td>[[${author.annotation}]]</td>
+                        <td>[[${action}]]
+                        <a class="h6 m-3" th:href="@{'/authors/edit/' + ${author.id}}">Edit</a>
+                        <a class="h6" th:href="@{'/authors/delete/' + ${author.id}}">Delete</a>
+                         </td>
+                    </tr>
+                    </th:block>
+                </tbody>
+
+                </table>
+            </div>
+        </div>
+
+</body>
+
+</html>
