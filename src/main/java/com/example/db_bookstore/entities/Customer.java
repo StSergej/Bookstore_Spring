@@ -15,7 +15,6 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
     private Long id;
 
     @Column(name = "customer_name", nullable = false, length = 45)
@@ -29,7 +28,6 @@ public class Customer {
 
     @Column(nullable = false, length = 85)
     private String address;
-
 
     @OneToMany(mappedBy = "customer")
     private List<Order> order;
@@ -71,8 +69,7 @@ public class Customer {
                 ", customerName='" + customerName + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+                ", address='" + address + "'}";
     }
 
     @Override

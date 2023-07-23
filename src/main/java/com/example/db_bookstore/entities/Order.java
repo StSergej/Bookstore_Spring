@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -15,7 +16,6 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
     private Long id;
 
     @Column(name = "order_date", nullable = false, length = 10)
@@ -25,11 +25,10 @@ public class Order {
     private String totalAmount;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     private Customer customer;
 
-    //@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItem;
 
 
@@ -55,6 +54,7 @@ public class Order {
                 "id=" + id +
                 ", orderDate='" + orderDate + '\'' +
                 ", totalAmount='" + totalAmount + '\'' +
-                ", customer=" + customer + '}';
+                ", customer={id=" + customer.getId() +
+                ", name=" + customer.getCustomerName() + "}" + '}';
     }
 }

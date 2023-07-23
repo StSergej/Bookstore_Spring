@@ -2,6 +2,7 @@ package com.example.db_bookstore.controller;
 
 import com.example.db_bookstore.entities.Customer;
 import com.example.db_bookstore.service.CustomerService;
+
 import com.example.db_bookstore.service.entityException.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class CustomerController {
     public String showNewCustomer(Model model){
 
         model.addAttribute("customer", new Customer());
-        model.addAttribute("pageTitleCustomer", "Add New Customer");
+        model.addAttribute("pageTitle", "Add New Customer");
 
         return "newCustomer";
     }
@@ -52,7 +54,7 @@ public class CustomerController {
             Customer customer = customerService.updateCustomer(id);
 
             model.addAttribute("customer", customer);
-            model.addAttribute("pageTitleCustomer", "Edit Customer(ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit Customer(ID: " + id + ")");
 
             return "newCustomer";
 

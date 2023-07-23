@@ -15,37 +15,41 @@
 
         <div class="m-2">
             <a class="h5"  th:href="@{/orders/new}">Add New Order</a>
+            <a class="h5 m-4" th:href="@{/orderItems}">Order Items</a>
         </div>
 
         <div>
             <table class="table table-bordered">
-            <thead class="table-light">
+                <thead class="table-light">
                 <tr>
-                    <th>ID Order</th>
-                    <th>ID Customer</th>
+                    <th>ID</th>
+                    <th>Customer ID</th>
                     <th>Order Data</th>
                     <th>Total Amount</th>
                     <th>Action</th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
-            <th:block th:each="order : ${listOrders}">
-                <tr>
-                    <td>[[${order.id}]]</td>
-                    <td>[[${order.customer}]]</td>
-                    <td>[[${order.orderDate}]]</td>
-                    <td>[[${order.totalAmount}]]</td>
-                    <td>[[${action}]]
-                        <a class="h6 m-3" th:href="@{'/orders/edit/' + ${order.id}}">Edit</a>
-                        <a class="h6 " th:href="@{'/orders/delete/' + ${order.id}}">Delete</a>
-                    </td>
-                </tr>
-            </th:block>
-            </tbody>
-        </table>
+                <tbody>
+                <th:block th:each="order : ${listOrders}">
+                    <tr>
+                        <td>[[${order.id}]]</td>
+                        <td>[[${order.customer.id}]]</td>
+                        <td>[[${order.orderDate}]]</td>
+                        <td>[[${order.totalAmount}]]</td>
+                        <td>[[${action}]]
+                            <a class="h6 m-3" th:href="@{'/orders/edit/' + ${order.id}}">Edit</a>
+                            <a class="h6 " th:href="@{'/orders/delete/' + ${order.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
-</div>
 
 </body>
 

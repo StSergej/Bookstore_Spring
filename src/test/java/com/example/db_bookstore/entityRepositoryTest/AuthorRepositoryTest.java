@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Rollback(value = false) //  данные заносятся в таблицу
+@Rollback(value = false)
 public class AuthorRepositoryTest {
 
     @Autowired
@@ -24,13 +24,14 @@ public class AuthorRepositoryTest {
 
         Author author = new Author();
 
-//        author.setAuthorName("Charles Dickens");
-//        author.setNationality("British");
-//        author.setAnnotation("English novelist");
-
         author.setAuthorName("Paulo Coelho");
         author.setNationality("Brazilian");
         author.setAnnotation("Brazilian author known for 'The Alchemist' and other inspirational works.");
+
+        author.setAuthorName("Charles Dickens");
+        author.setNationality("British");
+        author.setAnnotation("English novelist, generally considered the greatest of the Victorian era.");
+
 
         Author savedAuthor = authorRepository.save(author);
 
@@ -54,25 +55,20 @@ public class AuthorRepositoryTest {
 
     @Test
     public void testUpdateAuthor(){
-        Long authorId = 10L;
+        Long authorId = 9L;
+
         Optional<Author> optionalAuthor = authorRepository.findById(authorId);
 
         Author author = optionalAuthor.get();
-        //author.setAnnotation("English novelist");
-        //author.setAnnotation("English novelist, generally considered the greatest of the Victorian era.");
-        //author.setAnnotation("Brazilian author");
-        author.setAnnotation("Brazilian author known for 'The Alchemist' and other inspirational works.");
+
+        author.setAnnotation("Brazilian author");
 
         authorRepository.save(author);
 
         Author updatedAuthor = authorRepository.findById(authorId).get();
 
         Assertions.assertThat(updatedAuthor.getAnnotation())
-                    //.isEqualTo("English novelist");
-                    //.isEqualTo("English novelist, generally considered the greatest of the Victorian era.");
-                            //.isEqualTo("Brazilian author");
-                            .isEqualTo("Brazilian author known for 'The Alchemist' and other inspirational works.");
-
+                .isEqualTo("Brazilian author");
 
         System.out.println(updatedAuthor);
 
@@ -81,6 +77,7 @@ public class AuthorRepositoryTest {
     @Test
     public void testGetAuthor(){
         Long authorId = 5L;
+
         Optional<Author> optionalGetAuthor = authorRepository.findById(authorId);
 
         Assertions.assertThat(optionalGetAuthor).isPresent();
@@ -90,9 +87,10 @@ public class AuthorRepositoryTest {
 
     @Test
     public void testDeleteAuthor(){
-        Long authorId = 15L;
+        Long authorId = 9L;
 
         authorRepository.deleteById(authorId);
+
         Optional<Author> optionalDeleteAuthor = authorRepository.findById(authorId);
 
         Assertions.assertThat(optionalDeleteAuthor).isNotPresent();

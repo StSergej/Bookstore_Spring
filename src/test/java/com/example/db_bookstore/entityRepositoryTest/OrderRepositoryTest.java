@@ -35,9 +35,9 @@ public class OrderRepositoryTest {
 
         Order order = new Order();
 
-        order.setCustomer(customer);  // 6, '2023-06-15', 10.99
+        order.setCustomer(customer);
         order.setOrderDate("2023-06-15");
-        order.setTotalAmount("22,99");
+        order.setTotalAmount("10,99");
 
         Order savedOrder = orderRepository.save(order);
 
@@ -62,21 +62,21 @@ public class OrderRepositoryTest {
     @Test
     public void testUpdateOrder(){
 
-        Long orderId = 6L;
+        Long orderId = 5L;
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
 
         Order order = optionalOrder.get();
 
-        //order.setOrderDate("2023-06-16");
-        order.setTotalAmount("25,98");
+        order.setOrderDate("2023-06-16");
+        order.setTotalAmount("12,99");
 
-
+        
         orderRepository.save(order);
 
         Order updateOrder = orderRepository.findById(orderId).get();
 
-        //Assertions.assertThat(updateOrder.getOrderDate()).isEqualTo("2023-06-16");
-        Assertions.assertThat(updateOrder.getTotalAmount()).isEqualTo("25,98");
+        Assertions.assertThat(updateOrder.getOrderDate()).isEqualTo("2023-06-16");
+        Assertions.assertThat(updateOrder.getTotalAmount()).isEqualTo("12,99");
 
         System.out.println(updateOrder);
 
@@ -85,7 +85,7 @@ public class OrderRepositoryTest {
     @Test
     public void testGetOrder(){
 
-        Long orderId = 3L;
+        Long orderId = 2L;
         Optional<Order> optionalGetOrder = orderRepository.findById(orderId);
 
         Assertions.assertThat(optionalGetOrder).isPresent();

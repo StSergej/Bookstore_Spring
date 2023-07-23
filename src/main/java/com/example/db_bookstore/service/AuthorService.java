@@ -3,7 +3,6 @@ package com.example.db_bookstore.service;
 import com.example.db_bookstore.entities.Author;
 import com.example.db_bookstore.repository.AuthorRepository;
 import com.example.db_bookstore.service.entityException.AuthorException;
-import com.example.db_bookstore.service.entityException.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AuthorService {
 
     @Autowired
@@ -25,7 +25,6 @@ public class AuthorService {
     public void saveAuthor(Author author){
 
         authorRepository.save(author);
-
     }
 
     public Author updateAuthor(Long id) throws AuthorException {

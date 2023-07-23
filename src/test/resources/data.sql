@@ -1,3 +1,4 @@
+
 INSERT INTO Authors (author_name, nationality, annotation)
 VALUES
     ( 'Harper Lee', 'American', 'American author known for "To Kill a Mockingbird".'),
@@ -13,8 +14,8 @@ SELECT * FROM Authors;
 
 INSERT INTO Authors (author_name, nationality, annotation)
 VALUES
-    ( 'Paulo Coelho', 'Brazilian', 'Brazilian author known for "The Alchemist" and other inspirational works.');
--- ('Charles Dickens', 'British', 'English novelist, generally considered the greatest of the Victorian era.'); -- для тестов
+    ( 'Paulo Coelho', 'Brazilian', 'Brazilian author known for "The Alchemist" and other inspirational works.'),
+    ('Charles Dickens', 'British', 'English novelist, generally considered the greatest of the Victorian era.');
 
 DELETE FROM Authors
 WHERE author_name = 'Paulo Coelho';
@@ -37,10 +38,9 @@ SELECT * FROM Books;
 
 INSERT INTO Books (book_name, author_id, publisher_name, isbn, total_pages, price)
 VALUES
-    ( 'The Alchemist', 9, 'HarperOne', '9780062315007', 208, 25.99);
--- ('David Copperfield', 1, 'HarperCollins Publishers', '9780004244716', 831, 19,99); --для тестов
+    ( 'The Alchemist', 9, 'HarperOne', '9780062315007', 208, 25.99),
+    ('David Copperfield', 1, 'HarperCollins Publishers', '9780004244716', 831, 19,99);
 ----------------------------------------------------------------------------------------------------------
-
 
 INSERT INTO Customers (customer_name, email, phone, address)
 VALUES
@@ -48,7 +48,7 @@ VALUES
     ( 'Emily Johnson', 'emily@gmail.com', '555-987-6543', '456 Maple Ave'),
     ( 'Michael Davis', 'michael@hotmail.com', '555-567-5098', '789 Oakwood Dr'),
     ( 'Emma Anderson', 'emma@yahoo.com', '555-153-2249', '567 Pine St'),
-    ( 'Oliver Taylor', 'oliver@aol.com', '555-444-5555', '890 Elm Rd');
+    ( 'Oliver Taylor', 'oliver@aol.com', '555-234-5678', '890 Elm Rd');
 
 SELECT * FROM Customers;
 
@@ -57,13 +57,12 @@ WHERE customer_name = 'Oliver Taylor';
 
 INSERT INTO Customers (customer_name, email, phone, address)
 VALUES
-    ( 'Oliver Taylor', 'oliver@aol.com', '555-444-5555', '890 Elm Rd');
--- ('Ann Braun', 'braun@hotmail.com', '555-484-6868', '750 Spruce Rd');
--- ('Steve Jackson', 'jackson@gmail.com', '555-555-6576', '81 Monroe St'); --для тестов
+    ('Ann Braun', 'braun@hotmail.com', '555-484-6868', '750 Spruce Rd'),
+    ('Steve Jackson', 'jackson@gmail.com', '555-223-6576', '81 Monroe St');
 
-DELETE FROM Customers WHERE customer_name = 'Oliver Taylor';
+DELETE FROM Customers
+WHERE customer_name = 'Oliver Taylor';
 ----------------------------------------------------------------------------------------------------------
-
 
 INSERT INTO Orders (customer_id, order_date, total_amount)
 VALUES
@@ -78,9 +77,7 @@ SELECT * FROM Orders;
 INSERT INTO Orders (customer_id, order_date, total_amount)
 VALUES
     ( 6, '2023-06-15', 10.99);
--- ( 1, '2023-06-15', 19.99); -- для тестов
 ----------------------------------------------------------------------------------------------------------
-
 
 INSERT INTO Order_Items (order_id, book_id, quantity, item_price)
 VALUES
@@ -96,3 +93,57 @@ VALUES
     ( 5, 10,  3,  29.99);
 
 SELECT * FROM Order_Items;
+
+INSERT INTO Order_Items (order_id, book_id, quantity, item_price)
+VALUES ( 6,  7,  1,  10.99);
+----------------------------------------------------------------------------------------------------------
+
+DELIMITER /
+CREATE PROCEDURE getNameAuthorGetNameCustomer()
+begin
+select author_name, book_name, customer_name, orders.id,
+       orders.order_date,Order_Items.id, Order_Items.item_price
+from Order_items
+         inner join Books on Books.id = Order_Items.book_id
+         inner join Authors on Authors.id = Books.author_id
+         inner join Orders on Orders.id = Order_Items.order_id
+         inner join Customers on Customers.id = Orders.customer_id
+where Authors.author_name = 'F. Scott Fitzgerald';
+end /
+
+CALL getNameAuthorGetNameCustomer(); /
+
+drop procedure getNameAuthorGetNameCustomer; /
+DELIMiTER /
+
+
+DELIMITER /
+CREATE PROCEDURE getCustomers()
+begin
+select Orders.id, order_date, customer_name, phone, total_amount
+from Orders
+         inner join Customers on Customers.id = Orders.customer_id;
+end /
+
+CALL getCustomers(); /
+
+drop procedure getCustomers;/
+DELIMITER /
+
+
+DELIMITER /
+CREATE PROCEDURE getOrderAndCustomer()
+begin
+select Order_items.id as order_item_id, order_date, Order_Items.order_id as order_id, customer_name, book_name, author_name, quantity, item_price
+from Order_Items
+         inner join Books on Books.id = Order_Items.book_id
+         inner join Authors on Authors.id = Books.author_id
+         inner join Orders on Orders.id = Order_Items.order_id
+         inner join Customers on Customers.id = Orders.customer_id
+where Customers.customer_name = 'Emma Anderson';
+end /
+
+CALL getOrderAndCustomer(); /
+
+drop procedure getOrderAndCustomer; /
+DELIMITER /

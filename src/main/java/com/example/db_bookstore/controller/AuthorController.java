@@ -2,17 +2,20 @@ package com.example.db_bookstore.controller;
 
 import com.example.db_bookstore.entities.Author;
 import com.example.db_bookstore.service.AuthorService;
+
 import com.example.db_bookstore.service.entityException.AuthorException;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+//@RestController
 @Controller
 public class AuthorController {
 
@@ -32,7 +35,7 @@ public class AuthorController {
     public String showNewAuthor(Model model){
 
         model.addAttribute("author", new Author());
-        model.addAttribute("pageTitleAuthor", "Add New Author");
+        model.addAttribute("pageTitle", "Add New Author");
 
         return "newAuthor";
     }
@@ -52,7 +55,7 @@ public class AuthorController {
             Author author = authorService.updateAuthor(id);
 
             model.addAttribute("author", author);
-            model.addAttribute("pageTitleAuthor", "Edit Author(ID " + id + ")");
+            model.addAttribute("pageTitle", "Edit Author(ID: " + id + ")");
 
             return "newAuthor";
 
@@ -71,6 +74,5 @@ public class AuthorController {
         return "redirect:/authors";
 
     }
-
 
 }

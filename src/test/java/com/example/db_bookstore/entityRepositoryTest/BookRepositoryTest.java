@@ -27,11 +27,9 @@ public class BookRepositoryTest {
 
     @Test
     public void testAddNewBook(){
+        Long authorId = 9L;
 
-        //Long authorId = 9L;
-
-        //Optional<Author> optionalAuthor = authorRepository.findById(authorId);
-        Optional<Author> optionalAuthor = authorRepository.findById(9L);
+        Optional<Author> optionalAuthor = authorRepository.findById(authorId);
 
         Author author = optionalAuthor.get();
 
@@ -54,6 +52,7 @@ public class BookRepositoryTest {
 
     @Test
     public void testAllBook(){
+
         Iterable<Book> books = bookRepository.findAll();
 
         Assertions.assertThat(books).hasSizeGreaterThan(0);
@@ -65,28 +64,26 @@ public class BookRepositoryTest {
     @Test
     public void testUpdateBook(){
         Long bookId = 11L;
+
         Optional<Book> optionalUpdatedBook = bookRepository.findById(bookId);
 
         Book book = optionalUpdatedBook.get();
-        book.setPrice("19,99");
-        //book.setPrice("22,99");
+        book.setPrice("12,99"); // price = 25,99
 
         bookRepository.save(book);
 
         Book updatedBook = bookRepository.findById(bookId).get();
 
-        Assertions.assertThat(updatedBook.getPrice()).isEqualTo("19,99");
-        //Assertions.assertThat(updatedBook.getPrice()).isEqualTo("22,99");
+        Assertions.assertThat(updatedBook.getPrice()).isEqualTo("12,99");
 
         System.out.println(updatedBook);
     }
 
     @Test
     public void testGetBook(){
-
         Long bookId = 9L;
-        Optional<Book> optionalGetBook = bookRepository.findById(bookId);
 
+        Optional<Book> optionalGetBook = bookRepository.findById(bookId);
 
         Assertions.assertThat(optionalGetBook).isPresent();
 
@@ -95,9 +92,11 @@ public class BookRepositoryTest {
 
     @Test
     public void testDeleteBook(){
-        Long bookId = 7L;
+
+        Long bookId = 11L;
 
         bookRepository.deleteById(bookId);
+
         Optional<Book> optionalDeleteBook = bookRepository.findById(bookId);
 
         Assertions.assertThat(optionalDeleteBook).isNotPresent();

@@ -15,7 +15,6 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "author_id")
     private Long id;
 
     @Column(name = "author_name", nullable = false, length = 45)
@@ -44,13 +43,28 @@ public class Author {
         this.authorName = authorName;
     }
 
+    public Author(String authorName, String nationality, String annotation) {
+        this.authorName = authorName;
+        this.nationality = nationality;
+        this.annotation = annotation;
+    }
+
+    public Author(Long id, String authorName, String nationality, String annotation) {
+        this.id = id;
+        this.authorName = authorName;
+        this.nationality = nationality;
+        this.annotation = annotation;
+    }
+
+
+
     @Override
     public String toString() {
         return "Author{" +
                 "id=" + id +
                 ", authorName='" + authorName + '\'' +
                 ", nationality='" + nationality + '\'' +
-                ", annotation='" + annotation + '}';
+                ", annotation='" + annotation + "'}";
     }
 
     @Override

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
@@ -8,9 +9,49 @@
 
 <body>
 
-<div class="container-fluid text-center">
-  <div class="m-2"><h3>OrderItems_One</h3></div>
-</div>
+   <div class="container-fluid text-center">
+       <br>
+      <div class="m-2"><h3>Order Items</h3></div>
+
+       <div class="m-2">
+           <a class="h5"  th:href="@{/orderItems/new}">Add New Order Item</a>
+       </div>
+
+       <div>
+           <table class="table table-bordered">
+               <thead class="table-light">
+               <tr>
+                   <th>ID</th>
+                   <th>Order ID</th>
+                   <th>Book ID</th>
+                   <th>Quantity</th>
+                   <th>Price</th>
+                   <th>Action</th>
+               </tr>
+               </thead>
+
+               <tbody>
+               <th:block th:each="orderItem : ${listOrderItems}">
+                   <tr>
+                       <td>[[${orderItem.id}]]</td>
+                       <td>[[${orderItem.order.id}]]</td>
+                       <td>[[${orderItem.book.id}]]</td>
+                       <td>[[${orderItem.quantity}]]</td>
+                       <td>[[${orderItem.itemPrice}]]</td>
+                       <td>[[${action}]]
+                            <a class="h6 m-3" th:href="@{'/orderItems/edit/' + ${orderItem.id}}">Edit</a>
+                            <a class="h6 " th:href="@{'/orderItems/delete/' + ${orderItem.id}}">Delete</a>
+                       </td>
+                   </tr>
+               </th:block>
+               </tbody>
+
+           </table>
+
+       </div>
+
+   </div>
+
 </body>
 
 </html>
@@ -19,62 +60,3 @@
 
 
 
-
-
-
-
-<!--
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>OrderItems</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-
-</head>
-
-  <body>
-
-    <div class="container-fluid text-center">
-    <div class="m-2"><h3>OrderItems_ONE</h3></div>
-      </div>
-
-  <div class="m-2">
-    <a class="h5"  th:href="@{/orderItems/new}">Add New Order Items</a>
-  </div>
-
-  <div>
-    <table class="table table-bordered">
-      <thead class="table-light">
-      <tr>
-        <th>ID </th>
-        <th>ID Order</th>
-        <th>ID Book</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <th:block th:each="orderItem : ${listOrderItems}">
-        <tr>
-          <td>[[${orderItem.orderItemId}]]</td>
-          <td>[[${orderItem.orderId}]]</td>
-          <td>[[${orderItem.bookId}]]</td>
-          <td>[[${orderItem.quantity}]]</td>
-          <td>[[${orderItem.itemPrice}]]</td>
-          <td>[[${action}]]
-            <a class="h6 m-3" th:href="@{'/orderItems/edit' + ${orderItem.orderItemId}}">Edit</a>
-            <a class="h6 " th:href="@{'/orderItems/delete' + ${orderItem.orderItemId}}">Delete</a>
-          </td>
-        </tr>
-      </th:block>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-</body>
-
-</html> -->

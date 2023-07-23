@@ -6,15 +6,16 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "books")
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
     private Long id;
 
     @Column(name = "book_name", nullable = false, length = 45)
@@ -33,10 +34,9 @@ public class Book {
     private String price;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "author_id", referencedColumnName = "author_id")
+    @JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false)
     private Author author;
 
-    //@OneToMany(mappedBy = "book",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OneToMany(mappedBy = "book")
     private List<OrderItem> orderItem;
 
@@ -63,6 +63,14 @@ public class Book {
         this.price = price;
     }
 
+    public Book(Long id, String bookName, String publisher, String isbn, Long totalPages, String price) {
+        this.id = id;
+        this.bookName = bookName;
+        this.publisher = publisher;
+        this.isbn = isbn;
+        this.totalPages = totalPages;
+        this.price = price;
+    }
 
     @Override
     public String toString() {
@@ -73,8 +81,7 @@ public class Book {
                 ", isbn='" + isbn + '\'' +
                 ", totalPages=" + totalPages +
                 ", price='" + price + '\'' +
-                ", author=" + author +
-                '}';
+                ", author=" + author.getAuthorName() + '}';
     }
 
     @Override

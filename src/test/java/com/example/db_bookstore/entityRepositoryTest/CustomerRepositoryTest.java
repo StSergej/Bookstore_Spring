@@ -51,23 +51,23 @@ public class CustomerRepositoryTest {
 
     @Test
     public void testUpdateCustomer(){
-        Long customerId = 5L;
+        Long customerId = 6L;
+
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
 
         Customer customer = optionalCustomer.get();
 
-        //customer.setEmail("jackson1122@gmail.com");
-        customer.setPhone("555-333-1111");
-        //customer.setAddress("18 Monroe St");
-
+        customer.setEmail("jackson2012@gmail.com");
+        customer.setPhone("555-444-1111");
+        customer.setAddress("81-C Monroe St");
 
         customerRepository.save(customer);
 
         Customer updatedCustomer = customerRepository.findById(customerId).get();
 
-        //Assertions.assertThat(updatedCustomer.getEmail()).isEqualTo("jackson1122@gmail.com");
-        Assertions.assertThat(updatedCustomer.getPhone()).isEqualTo("555-333-1111");
-        //Assertions.assertThat(updatedCustomer.getAddress()).isEqualTo("18 Monroe St");
+        Assertions.assertThat(updatedCustomer.getEmail()).isEqualTo("jackson2012@gmail.com");
+        Assertions.assertThat(updatedCustomer.getPhone()).isEqualTo("555-444-1111");
+        Assertions.assertThat(updatedCustomer.getAddress()).isEqualTo("81-C Monroe St");
 
         System.out.println(updatedCustomer);
     }
@@ -75,6 +75,7 @@ public class CustomerRepositoryTest {
     @Test
     public void testGetCustomer(){
         Long customerId = 4L;
+
         Optional<Customer> optionalGetCustomer = customerRepository.findById(customerId);
 
         Assertions.assertThat(optionalGetCustomer).isPresent();
@@ -84,7 +85,7 @@ public class CustomerRepositoryTest {
 
     @Test
     public void testDeleteCustomer(){
-        Long customerId = 5L;
+        Long customerId = 7L;
 
         customerRepository.deleteById(customerId);
         Optional<Customer> optionalDeleteCustomer = customerRepository.findById(customerId);

@@ -35,19 +35,19 @@ public class OrderItemRepositoryTest {
     @Test
     public void testAddNewOrderItem(){
 
-//        Long orderId = 6L;
-//        Long bookId = 7L;
+        Long orderId = 6L;
+        Long bookId = 7L;
 
-        Optional<Book> optionalBook = bookRepository.findById(7L);
-        Book book = optionalBook.get();
-
-        Optional<Order> optionalOrder = orderRepository.findById(6L);
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
         Order order = optionalOrder.get();
+
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
+        Book book = optionalBook.get();
 
         OrderItem orderItem = new OrderItem();
 
 
-        orderItem.setOrder(order);  // 6,  7,  1,  10.99
+        orderItem.setOrder(order);  // 6,  7,  1,  10.99 // 7,  9,  2,  33.98
         orderItem.setBook(book);
         orderItem.setQuantity(1L);
         orderItem.setItemPrice("10,99");
@@ -94,7 +94,7 @@ public class OrderItemRepositoryTest {
 
     @Test
     public void testGetOrderItem(){
-        Long orderItemId = 7L;
+        Long orderItemId = 5L;
 
         Optional<OrderItem> optionalGetOrderItem = orderItemRepository.findById(orderItemId);
 

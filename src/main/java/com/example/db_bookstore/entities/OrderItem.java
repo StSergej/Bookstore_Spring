@@ -12,16 +12,15 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_item_id")
     private Long id;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "book_id", referencedColumnName = "book_id")
-    private Book book;
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "order_id", referencedColumnName = "order_id")
-    private Order order;
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private Book book;
 
     @Column(nullable = false)
     private Long quantity;
@@ -57,8 +56,8 @@ public class OrderItem {
     public String toString() {
         return "OrderItem{" +
                 "id=" + id +
-                ", book=" + book +
-                ", order=" + order +
+                ", book='" + book.getBookName() +
+                "', order=" + order +
                 ", quantity=" + quantity +
                 ", itemPrice='" + itemPrice + '\'' +
                 '}';
