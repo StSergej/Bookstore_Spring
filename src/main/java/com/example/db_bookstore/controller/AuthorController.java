@@ -2,20 +2,18 @@ package com.example.db_bookstore.controller;
 
 import com.example.db_bookstore.entities.Author;
 import com.example.db_bookstore.service.AuthorService;
-
 import com.example.db_bookstore.service.entityException.AuthorException;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-//@RestController
 @Controller
 public class AuthorController {
 
@@ -48,6 +46,7 @@ public class AuthorController {
         return "redirect:/authors";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/authors/edit/{id}")
     public String showEditAuthor(@PathVariable("id") Long id, Model model){
 
@@ -65,14 +64,13 @@ public class AuthorController {
         return "redirect:/authors";
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/authors/delete/{id}")
     public String deleteAuthorById(@PathVariable("id") Long id){
 
         authorService.deleteAuthor(id);
 
         return "redirect:/authors";
-
     }
 
 }

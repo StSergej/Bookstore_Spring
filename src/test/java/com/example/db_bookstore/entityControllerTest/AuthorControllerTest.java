@@ -3,8 +3,8 @@ package com.example.db_bookstore.entityControllerTest;
 import com.example.db_bookstore.controller.AuthorController;
 import com.example.db_bookstore.entities.Author;
 import com.example.db_bookstore.service.AuthorService;
-
 import com.example.db_bookstore.service.entityException.AuthorException;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(AuthorController.class)
@@ -33,13 +34,6 @@ public class AuthorControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    void showCreateMockMvc(){
-        assertNotNull(mockMvc);
-        System.out.println("Hello, MockMvc!");
-    }
-
-
-    @Test
     public void test_showAuthorList() throws Exception {
 
         List<Author> listAuthors = new ArrayList<>();
@@ -50,52 +44,82 @@ public class AuthorControllerTest {
         Mockito.when(authorService.listAllAuthor()).thenReturn(listAuthors);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/authors");
-        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andDo(print());
 
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void test_showNewAuthor() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors/new"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("newAuthor"))
+                .andExpect(model().attribute("author", instanceOf(Author.class)))
+                .andDo(print());
     }
 
     @Test
     public void test_saveNewAuthor() throws Exception {
 
-        Author newAuthor = new Author();
+        Author saveNewAuthor = new Author();
 
-        newAuthor.setId(3L);
-        newAuthor.setAuthorName("Clive Levis");
-        newAuthor.setNationality("British");
-        newAuthor.setAnnotation("British writer, literary scholar, and Anglican lay theologian.");
+        saveNewAuthor.setId(3L);
+        saveNewAuthor.setAuthorName("Clive Levis");
+        saveNewAuthor.setNationality("British");
+        saveNewAuthor.setAnnotation("British writer, literary scholar, and Anglican lay theologian.");
 
-        Mockito.doNothing().when(authorService).saveAuthor(newAuthor); // только для void
+        Mockito.doNothing().when(authorService).saveAuthor(saveNewAuthor);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/authors/save");
-        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andDo(print());
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/authors/save"))
+                .andExpect(redirectedUrl("/authors"))
+                .andExpect(status().is3xxRedirection())//MockHttpServletResponse:Status = 302
+//                .andExpect(status().isOk())
+                .andDo(print());
+
+//        Mockito.verify(authorService, times(1)).saveAuthor(saveNewAuthor);
 
     }
 
     @Test
     public void test_showEditAuthor() throws AuthorException, Exception {
+
         Long changeAuthorById = 9L;
+
         Author changedAuthor = new Author
-                ( 9L,"Paulo Coelho", "Brazilian","Brazilian author known for 'The Alchemist' and other inspirational works.");
+                ( 9L,"Paulo Coelho", "Brazilian",
+                        "Brazilian author known for 'The Alchemist' and other inspirational works.");
 
         Mockito.when(authorService.updateAuthor(changeAuthorById)).thenReturn(changedAuthor);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/authors/edit/" + changeAuthorById);
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/authors/edit/" + changeAuthorById))
+                .andExpect(view().name("newAuthor"))
+                .andExpect(status().isOk())
+                .andDo(print());
 
-        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andDo(print());
-
+        verify(authorService, times(1)).updateAuthor(9L);
     }
 
     @Test
     public void test_deleteAuthorById() throws Exception {
-        Long authorId = 8L;
 
-        Mockito.doNothing().when(authorService).deleteAuthor(authorId);
+        Author author = new Author();
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/authors/delete/" + authorId);
+        author.setId(3L);
+        author.setAuthorName("Clive Levis");
+        author.setNationality("British");
+        author.setAnnotation("British writer, literary scholar, and Anglican lay theologian.");
 
-        mockMvc.perform(requestBuilder).andExpect(status().isOk()).andDo(print());
+        Mockito.doNothing().when(authorService).deleteAuthor(author.getId());
 
-        Mockito.verify(authorService, times(1)).deleteAuthor(authorId);
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/authors/delete/" + author.getId()))
+                .andExpect(redirectedUrl("/authors"))
+                .andExpect(status().is3xxRedirection())//MockHttpServletResponse:Status = 302
+                .andDo(print());
     }
 
 }

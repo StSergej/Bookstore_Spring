@@ -34,7 +34,7 @@ public class CustomerService {
         if(optionalGetCustomer.isPresent()){
             return optionalGetCustomer.get();
         }
-        throw new CustomerException("No any customer with ID: " + id);
+        throw new CustomerException("No any Customer with ID: " + id);
     }
 
     public void deleteCustomer(Long id) {

@@ -34,7 +34,7 @@ public class BookService {
         if(optionalGetBook.isPresent()){
             return optionalGetBook.get();
         }
-        throw new BookException("No any book with ID: " + id);
+        throw new BookException("No any Book with ID: " + id);
     }
 
     public void deleteBook(Long id){

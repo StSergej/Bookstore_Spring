@@ -2,9 +2,10 @@ package com.example.db_bookstore.controller;
 
 import com.example.db_bookstore.entities.Order;
 import com.example.db_bookstore.service.OrderService;
-
 import com.example.db_bookstore.service.entityException.OrderException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +49,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/orders/edit/{id}")
     public String showEditOrder(@PathVariable("id") Long id, Model model){
 
@@ -65,7 +67,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/orders/delete/{id}")
     public String deleteOrderById(@PathVariable("id") Long id){
 
@@ -73,6 +75,5 @@ public class OrderController {
 
         return "redirect:/orders";
     }
-
 
 }

@@ -34,7 +34,7 @@ public class OrderService {
         if(optionalGetOrder.isPresent()){
             return optionalGetOrder.get();
         }
-        throw new OrderException("No any order with ID: " + id);
+        throw new OrderException("No any Order with ID: " + id);
     }
 
     public void deleteOrder(Long id){

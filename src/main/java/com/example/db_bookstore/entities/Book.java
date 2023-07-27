@@ -63,13 +63,25 @@ public class Book {
         this.price = price;
     }
 
-    public Book(Long id, String bookName, String publisher, String isbn, Long totalPages, String price) {
+    public Book(Long id, String bookName, String publisher,
+                String isbn, Long totalPages, String price) {
         this.id = id;
         this.bookName = bookName;
         this.publisher = publisher;
         this.isbn = isbn;
         this.totalPages = totalPages;
         this.price = price;
+    }
+
+    public Book(Long id, String bookName, String publisher,
+                String isbn, Long totalPages, String price, Author author) {
+        this.id = id;
+        this.bookName = bookName;
+        this.publisher = publisher;
+        this.isbn = isbn;
+        this.totalPages = totalPages;
+        this.price = price;
+        this.author = author;
     }
 
     @Override
@@ -81,7 +93,7 @@ public class Book {
                 ", isbn='" + isbn + '\'' +
                 ", totalPages=" + totalPages +
                 ", price='" + price + '\'' +
-                ", author=" + author.getAuthorName() + '}';
+                ", author:ID=" + author.getId() + '}';
     }
 
     @Override

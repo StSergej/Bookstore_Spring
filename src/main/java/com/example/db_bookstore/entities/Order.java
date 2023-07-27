@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
@@ -24,7 +23,8 @@ public class Order {
     @Column(name = "total_amount", nullable = false, length = 10)
     private String totalAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     private Customer customer;
 

@@ -16,9 +16,6 @@ INSERT INTO Authors (author_name, nationality, annotation)
 VALUES
     ( 'Paulo Coelho', 'Brazilian', 'Brazilian author known for "The Alchemist" and other inspirational works.'),
     ('Charles Dickens', 'British', 'English novelist, generally considered the greatest of the Victorian era.');
-
-DELETE FROM Authors
-WHERE author_name = 'Paulo Coelho';
 ---------------------------------------------------------------------------------------------------------------
 
 INSERT INTO Books (book_name, author_id, publisher_name, isbn, total_pages, price)
@@ -52,16 +49,10 @@ VALUES
 
 SELECT * FROM Customers;
 
-UPDATE Customers Set phone = '555-234-5678'
-WHERE customer_name = 'Oliver Taylor';
-
 INSERT INTO Customers (customer_name, email, phone, address)
 VALUES
     ('Ann Braun', 'braun@hotmail.com', '555-484-6868', '750 Spruce Rd'),
     ('Steve Jackson', 'jackson@gmail.com', '555-223-6576', '81 Monroe St');
-
-DELETE FROM Customers
-WHERE customer_name = 'Oliver Taylor';
 ----------------------------------------------------------------------------------------------------------
 
 INSERT INTO Orders (customer_id, order_date, total_amount)

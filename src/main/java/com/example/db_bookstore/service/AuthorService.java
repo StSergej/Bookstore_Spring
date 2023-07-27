@@ -34,7 +34,7 @@ public class AuthorService {
         if(optionalGetAuthor.isPresent()){
             return optionalGetAuthor.get();
         }
-        throw new AuthorException("No any author with ID: " + id);
+        throw new AuthorException("No any Author with ID: " + id);
     }
 
     public void deleteAuthor(Long id){
